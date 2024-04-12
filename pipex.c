@@ -28,41 +28,43 @@ void	exec(char *cmd, char **env)
 	}
 }
 
-void	child(char **av, int *p_fd, char **env)
+void	child(char *cmd, char *file, int *p_fd, char **env)
 {
 	int	fd;
+	int	num_cmd = 1;
+	int	num_file = 1;
 
-	fd = open_file(av[1], 0);
+	fd = open_file(file, 0);
 	dup2(fd, 0);
 	dup2(p_fd[1], 1);
 	close(p_fd[0]);
-	exec(av[2], env);
-}
-
-void	parent(char **av, int *p_fd, char **env)
-{
-	int	fd;
-
-	fd = open_file(av[4], 1);
-	dup2(fd, 1);
-	dup2(p_fd[0], 0);
-	close(p_fd[1]);
-	exec(av[3], env);
+	exec(cmd, env);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	int		p_fd[2];
-	pid_t	pid;
+	int		*p_fd[2];
+	pid_t	pid[2];
+	int		i = 0;
+	int		num_cmd = 1; // 1 ti make a while loop to make the children execute at the same time, we have a cmd every 1 input
+	int		num_file = -2; // -2 to make a while loop, because input is "infile cmd1 cmd 2 outfile" so we have a ifle every 3 output 
 
 	if (ac != 5)
 		exit_handler(1);
-	if (pipe(p_fd) == -1)
+	if (pipe(p_fd[i]) == -1)
 		exit(-1);
-	pid = fork();
-	if (pid == -1)
-		exit(-1);
-	if (!pid)
-		child(av, p_fd, env);
-	parent(av, p_fd, env);
+	while (i < 2) // 2 because it's the number of the child process
+	{
+		pid[i] = fork();
+		if (pid[i] == -1)
+			exit(-1);
+		i++;
+	}
+	while (i >= 0)
+	{
+		if (!pid[i])
+			child(av[num_cmd + 1], av[num_file + 3], p_fd[i], env);
+		i--;
+	}
+	while (wait(0) != -1 && errno != ECHILD)
 }

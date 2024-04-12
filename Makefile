@@ -44,14 +44,11 @@ libft:
 	make --no-print-directory -C 
 
 clean:
-	make --no-print-directory -C
-	rm -rf ${OBJ_D}
+	$(RM) $(OBJS)
 
-fclean:
-	make --no-print-directory -C
-	rm -rf ${OBJ_D}
-	rm -f ${NAME}
+fclean: clean
+	$(RM) $(NAME)
 
-re: fclean .internal_separate all
+re: clean fclean all
 
 .PHONY: all clean fclean re leaks
