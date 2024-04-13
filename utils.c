@@ -18,7 +18,7 @@ void	exit_handler(int n_exit)
 		ft_putstr_fd("./pipex infile cmd cmd outfile", 2);
 	if (n_exit == 2)
 		ft_putstr_fd("error opening file\n", 2);
-	exit(0);
+	exit(EXIT_FAILURE);
 }
 
 int	open_file(char *file, int in_or_out)

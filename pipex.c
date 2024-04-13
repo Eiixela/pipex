@@ -28,43 +28,60 @@ void	exec(char *cmd, char **env)
 	}
 }
 
-void	child(char *cmd, char *file, int *p_fd, char **env)
+void	child2(char **av, int *pipe_fd, char **env)
 {
 	int	fd;
-	int	num_cmd = 1;
-	int	num_file = 1;
 
-	fd = open_file(file, 0);
+	fd = open_file(av[4], 1);
+	dup2(fd, 1);
+	dup2(pipe_fd[0], 0);
+	close(pipe_fd[1]);
+	exec(av[3], env);
+}
+
+void	child1(char **av, int *p_fd, char **env)
+{
+	int	fd;
+
+	fd = open_file(av[1], 0);
 	dup2(fd, 0);
 	dup2(p_fd[1], 1);
 	close(p_fd[0]);
-	exec(cmd, env);
+	exec(av[2], env);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	int		*p_fd[2];
-	pid_t	pid[2];
-	int		i = 0;
-	int		num_cmd = 1; // 1 ti make a while loop to make the children execute at the same time, we have a cmd every 1 input
-	int		num_file = -2; // -2 to make a while loop, because input is "infile cmd1 cmd 2 outfile" so we have a ifle every 3 output 
+	int		pipe_fd[2];
+	pid_t	pid1;
+	pid_t	pid2;
+	int		status;
 
 	if (ac != 5)
 		exit_handler(1);
-	if (pipe(p_fd[i]) == -1)
-		exit(-1);
-	while (i < 2) // 2 because it's the number of the child process
+	if (pipe(pipe_fd) == -1)
 	{
-		pid[i] = fork();
-		if (pid[i] == -1)
-			exit(-1);
-		i++;
+		perror("pipe");
+		exit(EXIT_FAILURE);
 	}
-	while (i >= 0)
+	pid1 = fork();
+	if (pid1 == -1) {
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
+	else if (pid1 == 0)
+		child1(av, pipe_fd, env);
+	pid2 = fork();
+	if (pid2 == -1)
 	{
-		if (!pid[i])
-			child(av[num_cmd + 1], av[num_file + 3], p_fd[i], env);
-		i--;
+		perror("fork");
+		exit(EXIT_FAILURE);
 	}
-	while (wait(0) != -1 && errno != ECHILD)
+	else if (pid2 == 0)
+		child2(av, pipe_fd, env);
+	close(pipe_fd[0]);
+	close(pipe_fd[1]);
+	waitpid(pid1, &status, 0);
+	waitpid(pid2, &status, 0);
+	return (EXIT_SUCCESS);
 }
