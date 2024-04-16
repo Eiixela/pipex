@@ -6,7 +6,7 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:05:35 by aljulien          #+#    #+#             */
-/*   Updated: 2024/03/26 15:12:23 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:14:13 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,17 @@
 
 //pipex.c
 void		exec(char *cmd, char **env);
-void		child1(char **av, int *p_fd, char **env);
+void        child1(char **av, int *p_fd, char **env);
 int			main(int ac, char **av, char **env);
-void		child2(char **av, int *pipe_fd, char **env);
+void        child2(char **av, int *pipe_fd, char **env);
 
 //utils.c
 void		exit_handler(int n_exit);
-int			open_file(char *file, int in_or_out);
+int         open_file(char *file, int in_or_out);
 void		ft_free_tab(char **tab);
 char		*get_env(char *name, char **env);
 char		*get_path(char *cmd, char **env);
+int	path_in_command(char *cmd);
 
 //split.c
 char		**ft_split(char const *s, char c);

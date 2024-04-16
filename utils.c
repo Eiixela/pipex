@@ -6,7 +6,7 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:05:48 by aljulien          #+#    #+#             */
-/*   Updated: 2024/03/26 15:14:40 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:16:08 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ void	exit_handler(int n_exit)
 	exit(EXIT_FAILURE);
 }
 
-int	open_file(char *file, int in_or_out)
+int open_file(char *file, int in_or_out)
 {
-	int	ret;
+    int ret;
 
-	if (in_or_out == 0)
-		ret = open(file, O_RDONLY, 0777);
-	if (in_or_out == 1)
-		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (ret == -1)
-		exit_handler(2);
-	return (ret);
+    if (in_or_out == 0)
+        ret = open(file, O_RDONLY, 0777);
+    else if (in_or_out == 1)
+        ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+    else
+        return (-1);
+    return ret;
 }
 
 void	ft_free_tab(char **tab)
@@ -54,6 +54,11 @@ char	*get_env(char *name, char **env)
 	char	*sub;
 
 	i = 0;
+	if (!env)
+	{
+		ft_putstr_fd("Path not found, please stop trying to break my pipex with 'unset PATH'", 2);
+		return (NULL);
+	}
 	while (env[i])
 	{
 		j = 0;
@@ -70,6 +75,16 @@ char	*get_env(char *name, char **env)
 	}
 	return (NULL);
 }
+
+ int	path_in_command(char *cmd)
+{
+	if (access(cmd, F_OK) == 0)
+	{
+		return (1);
+	}
+	else
+		return (0);
+} 
 
 char	*get_path(char *cmd, char **env)
 {

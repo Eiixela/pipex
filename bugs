@@ -1,0 +1,4 @@
+
+ ' on params breaks code
+- message erreur sur unset PATH 
+- permettre a pipex d'executer les commandes en cas de unset PATH
