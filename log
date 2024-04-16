@@ -1,0 +1,30 @@
+==73465== Memcheck, a memory error detector
+==73465== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==73465== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==73465== Command: ./pipex in ls wc\ -l out
+==73465== Parent PID: 40653
+==73465== 
+==73465== 
+==73465== FILE DESCRIPTORS: 6 open (3 std) at exit.
+==73465== Open file descriptor 7: out
+==73465==    at 0x498653B: open (open64.c:41)
+==73465==    by 0x40156A: open_file (utils.c:29)
+==73465==    by 0x401457: main (pipex.c:120)
+==73465== 
+==73465== Open file descriptor 6: in
+==73465==    at 0x498653B: open (open64.c:41)
+==73465==    by 0x40156A: open_file (utils.c:29)
+==73465==    by 0x4013EF: main (pipex.c:109)
+==73465== 
+==73465== Open file descriptor 3: /home/aljulien/Documents/C/C2/pipex/log
+==73465==    <inherited from parent>
+==73465== 
+==73465== 
+==73465== HEAP SUMMARY:
+==73465==     in use at exit: 0 bytes in 0 blocks
+==73465==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==73465== 
+==73465== All heap blocks were freed -- no leaks are possible
+==73465== 
+==73465== For lists of detected and suppressed errors, rerun with: -s
+==73465== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

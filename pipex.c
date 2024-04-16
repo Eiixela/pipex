@@ -17,14 +17,21 @@ void	exec(char *cmd, char **env)
 	char	**s_cmd;
 	char	*path;
 	int		path_in_cmd;
+	int i = 0;
 	
 	s_cmd = ft_split(cmd, ' ');
 	path_in_cmd = path_in_command(cmd);
 	if (path_in_cmd == 0)
 		path = get_path(s_cmd[0], env);
-	else 
+	else
+	{
+		
 		path = cmd;
-	if (execve(path, s_cmd, env) == -1)
+		return ;
+	}
+	
+	i = execve(path, s_cmd, env);
+	if (i == -1)
 	{
 		ft_putstr_fd("pipex: command not found ", 2);
 		ft_putstr_fd(s_cmd[0], 2);
@@ -47,7 +54,7 @@ void child2(char **av, int *pipe_fd, char **env)
 void child1(char **av, int *p_fd, char **env)
 {
     int fd;
-	
+
     fd = open_file(av[1], 0);
     dup2(fd, 0);
     dup2(p_fd[1], 1);
@@ -95,7 +102,7 @@ int	main(int ac, char **av, char **env)
 	pid_t	pid1;
 	pid_t	pid2;
 	int		status;
-
+	
 	if (ac != 5)
 		exit_handler(1);
 	if (pipe(pipe_fd) == -1)
@@ -104,17 +111,24 @@ int	main(int ac, char **av, char **env)
 		exit(EXIT_FAILURE);
 	}
 	pid1 = fork();
+	
 	if ((open_file(av[1], 0) != -1))
-    { 
-		
-		if (pid1 == -1) {
+    {
+		if (pid1 == -1) 
+		{
 			perror("fork");
 			exit(EXIT_FAILURE);
 		}
+		
 		else if (pid1 == 0)
+		{
+			
 			child1(av, pipe_fd, env);
+		}
 	}
+	
 	pid2 = fork();
+	
 	if ((open_file(av[4], 0) != -1))
 	{
 		
@@ -124,7 +138,9 @@ int	main(int ac, char **av, char **env)
 			exit(EXIT_FAILURE);
 		}
 		else if (pid2 == 0)
+		{
 			child2(av, pipe_fd, env);
+		}
 	}
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
