@@ -54,11 +54,6 @@ char	*get_env(char *name, char **env)
 	char	*sub;
 
 	i = 0;
-	if (!env)
-	{
-		ft_putstr_fd("Path not found, please stop trying to break my pipex with 'unset PATH'", 2);
-		return (NULL);
-	}
 	while (env[i])
 	{
 		j = 0;
@@ -88,16 +83,25 @@ char	*get_env(char *name, char **env)
 
 char	*get_path(char *cmd, char **env)
 {
-	int		i;
 	char	*exec;
-	char	**allpath;
-	char	*path_part;
 	char	**s_cmd;
 
-	i = -1;
+	// Check if the command is an absolute path
+	if (cmd[0] == '/')
+	{
+		if (access(cmd, F_OK | X_OK) == 0)
+			return ft_strdup(cmd);
+		else
+			return NULL;
+	}
+
+	char	*path_part;
+	char	**allpath;
+
 	allpath = ft_split(get_env("PATH", env), ':');
 	s_cmd = ft_split(cmd, ' ');
-	while (allpath[++i])
+
+	for (int i = 0; allpath[i]; i++)
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, s_cmd[0]);
@@ -105,11 +109,13 @@ char	*get_path(char *cmd, char **env)
 		if (access(exec, F_OK | X_OK) == 0)
 		{
 			ft_free_tab(s_cmd);
+			ft_free_tab(allpath);
 			return (exec);
 		}
 		free(exec);
 	}
 	ft_free_tab(allpath);
 	ft_free_tab(s_cmd);
-	return (cmd);
+	return (NULL);
 }
+

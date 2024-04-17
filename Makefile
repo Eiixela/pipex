@@ -40,9 +40,6 @@ ${NAME}:	${OBJ_D} ${OBJS} Makefile
 ${OBJ_D}:
 	mkdir -p ${OBJ_D}
 
-libft:
-	make --no-print-directory -C 
-
 clean:
 	$(RM) $(OBJS)
 
