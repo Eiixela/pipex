@@ -1,47 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft_utils2.c                                     :+:      :+:    :+:   */
+/*   ft_putptr_pf.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 15:11:42 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/18 17:07:03 by aljulien         ###   ########.fr       */
+/*   Created: 2022/10/15 15:13:04 by adiaz-be          #+#    #+#             */
+/*   Updated: 2023/12/23 13:01:01 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "ft_printf.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+void	ft_putptr_pf(void *ptr, size_t *counter)
 {
-	size_t	i;
+	char			*str;
+	unsigned long	ptr_address;
 
-	i = 0;
-	while (i < size - 1 && src[i] != '\0' && size > 0)
+	ptr_address = (unsigned long)ptr;
+	if (ptr == 0)
 	{
-		dst[i] = src[i];
-		i++;
+		ft_putstr_pf("(nil)", counter);
+		return ;
 	}
-	if (i < size)
-	{
-		dst[i] = '\0';
-	}
-	while (src[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
-void	ft_free_tab(char **tab)
-{
-	size_t	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	ft_putstr_pf("0x", counter);
+	str = ft_aux_pf(ptr_address, HEX_LOW_BASE);
+	ft_putstr_pf(str, counter);
+	free(str);
 }

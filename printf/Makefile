@@ -5,48 +5,41 @@
 #                                                     +:+ +:+         +:+      #
 #    By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/26 14:51:00 by aljulien          #+#    #+#              #
-#    Updated: 2024/04/18 17:45:38 by aljulien         ###   ########.fr        #
+#    Created: 2023/12/21 15:13:27 by aljulien          #+#    #+#              #
+#    Updated: 2023/12/21 15:30:19 by aljulien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME	=	libftprintf.a
 
-SRCS =	pipex.c\
-		utils.c\
-		ft_split.c\
-		libft_utils.c\
-		libft_utils2.c\
-		error.c
-            
-OBJS = $(SRCS:%.c=${OBJ_D}%.o)
+SRC	=	ft_printf.c			\
+		ft_putchar_pf.c		\
+		ft_putstr_pf.c		\
+		ft_putnbr_pf.c		\
+		ft_putuint_pf.c		\
+		ft_puthex_pf.c		\
+		ft_putptr_pf.c		\
+		ft_aux_pf.c			\
 
-OBJ_D = .obj/
+OBJS = $(SRC:.c=.o)
 
-HEADER = pipex.h
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra
+RM = rm -rf
+AR = ar crs
 
-NAME = pipex
+$(NAME): $(OBJS)
+	$(AR) $(NAME) $(OBJS)
 
-CC = cc
-
-FLAGS = -Wall -Wextra -Werror -g3
-
-all: ${NAME}
-
-${OBJS}:	${OBJ_D}%.o: %.c pipex.h
-		${CC} ${FLAGS} -I. -c $< -o $@
-
-${NAME}:	${OBJ_D} ${OBJS} Makefile 
-	${CC} ${FLAGS} ${OBJS} -o ${NAME}
-
-${OBJ_D}:
-	mkdir -p ${OBJ_D}
+all: $(NAME)
 
 clean:
 	$(RM) $(OBJS)
 
-fclean: clean
-	$(RM) $(NAME)
+fclean:	clean
+	$(RM) $(NAME)		
 
-re: clean fclean all
+re:	fclean all
 
-.PHONY: all clean fclean re leaks
+.PHONY:	all clean fclean re
+

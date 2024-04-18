@@ -6,46 +6,11 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:05:48 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/16 14:16:08 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/18 17:46:31 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	exit_handler(int n_exit)
-{
-	if (n_exit == 1)
-		ft_putstr_fd("./pipex infile cmd cmd outfile", 2);
-	if (n_exit == 2)
-		ft_putstr_fd("error opening file\n", 2);
-	exit(EXIT_FAILURE);
-}
-
-int open_file(char *file, int in_or_out)
-{
-    int ret;
-
-    if (in_or_out == 0)
-        ret = open(file, O_RDONLY, 0777);
-    else if (in_or_out == 1)
-        ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
-    else
-        return (-1);
-    return ret;
-}
-
-void	ft_free_tab(char **tab)
-{
-	size_t	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
 
 char	*get_env(char *name, char **env)
 {
@@ -71,7 +36,7 @@ char	*get_env(char *name, char **env)
 	return (NULL);
 }
 
- int	path_in_command(char *cmd)
+int	path_in_command(char *cmd)
 {
 	if (access(cmd, F_OK) == 0)
 	{
@@ -79,43 +44,39 @@ char	*get_env(char *name, char **env)
 	}
 	else
 		return (0);
-} 
+}
+
+void	free_all(char **s_cmd, char **allpath)
+{
+	ft_free_tab(s_cmd);
+	ft_free_tab(allpath);
+}
 
 char	*get_path(char *cmd, char **env)
 {
 	char	*exec;
 	char	**s_cmd;
+	char	*path_part;
+	char	**allpath;
+	int		i;
 
-	// Check if the command is an absolute path
+	i = 0;
 	if (cmd[0] == '/')
 	{
 		if (access(cmd, F_OK | X_OK) == 0)
-			return ft_strdup(cmd);
-		else
-			return NULL;
+			return (ft_strdup(cmd));
+		return (NULL);
 	}
-
-	char	*path_part;
-	char	**allpath;
-
 	allpath = ft_split(get_env("PATH", env), ':');
 	s_cmd = ft_split(cmd, ' ');
-
-	for (int i = 0; allpath[i]; i++)
+	while (allpath[i++])
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, s_cmd[0]);
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
-		{
-			ft_free_tab(s_cmd);
-			ft_free_tab(allpath);
-			return (exec);
-		}
+			return (free_all(s_cmd, allpath), exec);
 		free(exec);
 	}
-	ft_free_tab(allpath);
-	ft_free_tab(s_cmd);
-	return (NULL);
+	return (free_all(s_cmd, allpath), NULL);
 }
-
