@@ -6,7 +6,7 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 14:57:28 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/18 17:01:07 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/20 16:28:37 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	ft_putstr_fd(char *s, int fd)
 		write (fd, &s[i], 1);
 		i++;
 	}
+	write (fd, "\n", 1);
 }
 
 char	*ft_strdup(const char *s)

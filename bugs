@@ -1,2 +1,5 @@
 - ' on params breaks code
 - message erreur sur unset PATH 
+
+probleme sur quote dqns quote quand grep un espace 
+probleme si command existe pas --> ajouter message erreur + leaks --> probablement sur mon get_path --> voir sil faut pas un get_path/exec par process

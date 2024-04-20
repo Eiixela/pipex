@@ -6,18 +6,17 @@
 #    By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/26 14:51:00 by aljulien          #+#    #+#              #
-#    Updated: 2024/04/18 17:45:38 by aljulien         ###   ########.fr        #
+#    Updated: 2024/04/20 16:21:32 by aljulien         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
 SRCS =	pipex.c\
 		utils.c\
-		ft_split.c\
+		split.c\
 		libft_utils.c\
 		libft_utils2.c\
-		error.c
-            
+		error.c\
+
 OBJS = $(SRCS:%.c=${OBJ_D}%.o)
 
 OBJ_D = .obj/

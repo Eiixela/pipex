@@ -6,7 +6,7 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:05:35 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/18 18:10:18 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:51:52 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <errno.h>
 
 //pipex.c
-void		exec(char *cmd, char **env);
+void		exec(char *cmd, char **env, int *pipe_fd);
 void		zchild1(char **av, int *p_fd, char **env);
 int			main(int ac, char **av, char **env);
 void		child2(char **av, int *pipe_fd, char **env);
@@ -47,9 +47,11 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 void		ft_putstr_fd(char *s, int fd);
 char		*ft_strdup(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+size_t		ft_strlen(const char *s);
 
 void		pid_error(pid_t pid);
 void		input_error(int ac);
-//void		open_infile_error();
+void		open_infile_error(void);
 
 #endif
+

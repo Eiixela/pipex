@@ -6,7 +6,7 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:45:40 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/18 18:23:24 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/20 16:26:23 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,10 @@ int	open_file(char *file, int in_or_out)
 {
 	int	ret;
 
-    ret = 0;
+	ret = 0;
 	if (in_or_out == 0)
 		ret = open(file, O_RDONLY, 0777);
 	else if (in_or_out == 1)
 		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	return (ret);
 }
-/*
-void    open_infile_error()
-{
-    ft_putstr_fd("no such input file\n", 1);
-    exit (EXIT_FAILURE);
-}*/

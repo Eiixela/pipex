@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 15:05:48 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/18 17:46:31 by aljulien         ###   ########.fr       */
-/*                                                                            */
+/*  */
+/*  :::	 ::::::::   */
+/*   utils.c	:+:   :+:	:+:   */
+/*  +:+ +:+	+:+	*/
+/*   By: aljulien <aljulien@student.42.fr>	+#+  +:+	   +#+  */
+/*  +#+#+#+#+#+   +#+	*/
+/*   Created: 2024/03/26 15:05:48 by aljulien	 #+#  #+#	*/
+/*   Updated: 2024/04/20 16:25:11 by aljulien	###   ########.fr	*/
+/*  */
 /* ************************************************************************** */
 
 #include "pipex.h"
@@ -69,14 +69,21 @@ char	*get_path(char *cmd, char **env)
 	}
 	allpath = ft_split(get_env("PATH", env), ':');
 	s_cmd = ft_split(cmd, ' ');
-	while (allpath[i++])
+	while (allpath[i])
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, s_cmd[0]);
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
-			return (free_all(s_cmd, allpath), exec);
+		{
+			ft_free_tab(s_cmd);
+			ft_free_tab(allpath);
+			return (exec);
+		}
 		free(exec);
+		i++;
 	}
-	return (free_all(s_cmd, allpath), NULL);
+	ft_free_tab(s_cmd);
+	ft_free_tab(allpath);
+	return (NULL);
 }
