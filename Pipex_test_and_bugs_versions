@@ -1,0 +1,121 @@
+version 1 == pipex
+version 2 == pipex_final
+
+tests : 
+1 -sans parametres
+2 -avec trop de parametres
+3 -outfile non existant
+4 -outfile sans les droits 
+5 -infile inexistant
+6 -infile sans les droits
+7 -"sleep 2" "sleep 1"
+8 -"sleep 1" "sleep 2"
+9 -command1 fausse + "sleep 1"
+10 -command2 fausse + "sleep 1"
+11 -command 1 == "grep ' '"
+12 -command 2 == "grep ' '"
+13 -"grep 'i'" cat
+14 -cat "grep 'i'"
+
+---> valgrind avec tous ces tests
+---> tous ces tests avec env -i + valgrind sans path
+---> tous ces tests avec env -i + valgrind avec path
+
+Donc 26 test total si on les fais avec les valgrind
+
+ok = comme bash
+ko = pas comme bash
+leaks = valgrind pas bon
+n = nothing happened
+sg = seg fault
+
+version 1 :
+//avec env
+1 : ok
+2 : ok
+3 : ok
+4 : ok
+5 : ok
+6 : ok
+7 : ok
+8 : ok
+9 : ok
+10 : ok
+11 : ko
+12 : ko
+13 : ko
+14 : ko
+//sans env sans path
+15 : ok
+16 : leaks
+17 : leaks + pas de message d'erreurs mais creation du ficher out
+18 : leaks
+19 : leaks
+20 : leaks
+21 : leaks
+22 : leaks
+23 : leaks
+24 : leaks
+25 : leaks
+26 : leaks
+//sans env avec path
+27 : ok
+28 : leaks
+29 : ok
+30 : ok
+31 : ok
+32 : ok
+33 : ok
+34 : ok
+35 : ok
+36 : ok
+37 : ko
+38 : ko
+39 : ko
+40 : ko
+
+
+version 2 :
+//avec env
+1 : 
+2 : 
+3 : 
+4 : 
+5 : 
+6 : 
+7 : 
+8 : 
+9 : 
+10 : 
+11 : 
+12 : 
+13 : 
+14 : 
+//sans env sans path
+15 : 
+16 : 
+17 : 
+18 : 
+19 : 
+20 : 
+21 : 
+22 : 
+23 : 
+24 : 
+25 : 
+26 : 
+//sans env avec path
+27 : 
+28 : 
+29 : 
+30 : 
+31 : 
+32 : 
+33 : 
+34 : 
+35 : 
+36 : 
+37 : 
+38 : 
+39 : 
+40 : 
