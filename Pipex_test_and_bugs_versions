@@ -119,3 +119,6 @@ version 2 :
 38 : 
 39 : 
 40 : 
+
+
+leak env -i /bin/valgrind --log-file=log --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./pipex Makefile /bin/cat /bin/"grep 'i'" out
