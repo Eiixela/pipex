@@ -1,0 +1,14 @@
+#    Makefile                                           :+:      :+:    :+:    #
+#    By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+         #
+#    Created: 2024/03/26 14:51:00 by aljulien          #+#    #+#              #
+#    Updated: 2024/04/20 16:21:32 by aljulien         ###   ########.fr        #
+SRCS =	pipex.c\
+		utils.c\
+		split.c\
+		libft_utils.c\
+		libft_utils2.c\
+HEADER = pipex.h
+NAME = pipex
+${OBJS}:	${OBJ_D}%.o: %.c pipex.h
+${NAME}:	${OBJ_D} ${OBJS} Makefile 
+	mkdir -p ${OBJ_D}

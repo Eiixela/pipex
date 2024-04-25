@@ -14,8 +14,8 @@ tests :
 10 -command2 fausse + "sleep 1"
 11 -command 1 == "grep ' '"
 12 -command 2 == "grep ' '"
-13 -"grep 'i'" cat
-14 -cat "grep 'i'"
+13 -"grep i" cat
+14 -cat "grep i"
 
 ---> valgrind avec tous ces tests
 ---> tous ces tests avec env -i + valgrind sans path
@@ -43,82 +43,36 @@ version 1 :
 10 : ok
 11 : ko
 12 : ko
-13 : ko
-14 : ko
+13 : ok
+14 : ok
 //sans env sans path
-15 : ok
-16 : leaks
-17 : leaks + pas de message d'erreurs mais creation du ficher out
-18 : leaks
-19 : leaks
-20 : leaks
-21 : leaks
-22 : leaks
-23 : leaks
-24 : leaks
-25 : leaks
-26 : leaks
+1 : ok
+2 : ok
+3 : ok
+4 : ok
+5 : ok
+6 : ok
+7 : ok
+8 : ok
+9 : ok
+10 : ok
+11 : ok
+12 : ok
 //sans env avec path
-27 : ok
-28 : leaks
-29 : ok
-30 : ok
-31 : ok
-32 : ok
-33 : ok
-34 : ok
-35 : ok
-36 : ok
-37 : ko
-38 : ko
-39 : ko
-40 : ko
+1 : ok
+2 : ok
+3 : ok
+4 : ok
+5 : ok
+6 : ok
+7 : ok
+8 : ok
+9 : ok
+10 : ok
+11 : ko
+12 : ko
+13 : ok 
+14 : ok
 
-
-version 2 :
-//avec env
-1 : 
-2 : 
-3 : 
-4 : 
-5 : 
-6 : 
-7 : 
-8 : 
-9 : 
-10 : 
-11 : 
-12 : 
-13 : 
-14 : 
-//sans env sans path
-15 : 
-16 : 
-17 : 
-18 : 
-19 : 
-20 : 
-21 : 
-22 : 
-23 : 
-24 : 
-25 : 
-26 : 
-//sans env avec path
-27 : 
-28 : 
-29 : 
-30 : 
-31 : 
-32 : 
-33 : 
-34 : 
-35 : 
-36 : 
-37 : 
-38 : 
-39 : 
-40 : 
-
-
-leak env -i /bin/valgrind --log-file=log --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./pipex Makefile /bin/cat /bin/"grep 'i'" out
+leak env -i /bin/valgrind --log-file=log --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./pipex Makefile /bin/cat /bin/"grep i" out
+env -i /bin/valgrind --log-file=log --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes ./pipex Makefile /bin/"grep i" /bin/cat out

@@ -27,7 +27,10 @@ void	pid_error(pid_t pid)
 void	exit_handler(int n_exit)
 {
 	if (n_exit == 1)
+	{
 		ft_putstr_fd("./pipex infile cmd cmd outfile", 2);
+		exit(EXIT_FAILURE);
+	}
 	if (n_exit == 2)
 		write(2, "c", 2);
 }

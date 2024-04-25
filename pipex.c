@@ -12,6 +12,27 @@
 
 #include "pipex.h"
 
+static char *check_space_quotes(char *s)
+{
+	int i = 0;
+
+	while (s[i])
+	{
+		if (s[i] == 39)
+		{
+			i++;
+			while (s[i] != 39)
+			{
+				if (s[i] == 32)
+					s[i] = -32;
+				i++;
+			}
+		}
+		i++
+	}
+	return (s);
+}
+
 void	exec(char *cmd, char **env, int *pipe_fd)
 {
 	char	**s_cmd;
@@ -25,7 +46,6 @@ void	exec(char *cmd, char **env, int *pipe_fd)
 		i = execve(path, s_cmd, env);
 	if (i == -1 || path == NULL)
 	{
-		perror("execve");
 		ft_putstr_fd("pipex: command not found ", 2);
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
@@ -64,6 +84,8 @@ void	child1(char **av, int *p_fd, char **env)
 		close(p_fd[1]);
 		exit(EXIT_FAILURE);
 	}
+	if (!env && (path_in_command(av[3]) != 0))
+		exit(EXIT_FAILURE);
 	dup2(fd, 0);
 	close(fd);
 	dup2(p_fd[1], 1);

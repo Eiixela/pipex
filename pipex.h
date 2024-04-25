@@ -24,7 +24,7 @@
 
 //pipex.c
 void		exec(char *cmd, char **env, int *pipe_fd);
-void		zchild1(char **av, int *p_fd, char **env);
+void		child1(char **av, int *p_fd, char **env);
 int			main(int ac, char **av, char **env);
 void		child2(char **av, int *pipe_fd, char **env);
 

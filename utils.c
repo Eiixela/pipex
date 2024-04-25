@@ -68,7 +68,11 @@ char	*get_path(char *cmd, char **env)
 		return (NULL);
 	}
 	allpath = ft_split(get_env("PATH", env), ':');
+	if (!allpath)
+		return (NULL);
 	s_cmd = ft_split(cmd, ' ');
+	if (!s_cmd)
+		return (NULL);
 	while (allpath[i])
 	{
 		path_part = ft_strjoin(allpath[i], "/");
