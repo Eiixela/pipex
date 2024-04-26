@@ -60,7 +60,7 @@ char	*get_path(char *cmd, char **env)
 	char	**allpath;
 	int		i;
 
-	i = 0;
+	i = -1;
 	if (cmd[0] == '/')
 	{
 		if (access(cmd, F_OK | X_OK) == 0)
@@ -73,21 +73,15 @@ char	*get_path(char *cmd, char **env)
 	s_cmd = ft_split(cmd, ' ');
 	if (!s_cmd)
 		return (NULL);
-	while (allpath[i])
+	while (allpath[++i])
 	{
 		path_part = ft_strjoin(allpath[i], "/");
 		exec = ft_strjoin(path_part, s_cmd[0]);
 		free(path_part);
 		if (access(exec, F_OK | X_OK) == 0)
-		{
-			ft_free_tab(s_cmd);
-			ft_free_tab(allpath);
-			return (exec);
-		}
+			return (free_all_tab(s_cmd, allpath), exec);
 		free(exec);
-		i++;
 	}
-	ft_free_tab(s_cmd);
-	ft_free_tab(allpath);
+	free_all_tab(s_cmd, allpath);
 	return (NULL);
 }

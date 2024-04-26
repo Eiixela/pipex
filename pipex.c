@@ -6,41 +6,28 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 14:15:26 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/20 19:03:35 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:08:50 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-static char *check_space_quotes(char *s)
-{
-	int i = 0;
-
-	while (s[i])
-	{
-		if (s[i] == 39)
-		{
-			i++;
-			while (s[i] != 39)
-			{
-				if (s[i] == 32)
-					s[i] = -32;
-				i++;
-			}
-		}
-		i++
-	}
-	return (s);
-}
 
 void	exec(char *cmd, char **env, int *pipe_fd)
 {
 	char	**s_cmd;
 	char	*path;
 	int		i;
+	int		j;
 
 	i = 0;
-	s_cmd = ft_split(cmd, ' ');
+	j = -1;
+	cmd = check_spaces_in_quotes(cmd);
+	s_cmd = ft_split(cmd, 32);
+	while (s_cmd[++j])
+	{
+		s_cmd[j] = get_spaces_in_quotes_back(s_cmd[j]);
+		s_cmd[j] = remove_quotes(s_cmd[j]);
+	}
 	path = get_path(s_cmd[0], env);
 	if (path != NULL)
 		i = execve(path, s_cmd, env);
@@ -49,7 +36,6 @@ void	exec(char *cmd, char **env, int *pipe_fd)
 		ft_putstr_fd("pipex: command not found ", 2);
 		close(pipe_fd[1]);
 		close(pipe_fd[0]);
-		ft_putstr_fd(s_cmd[0], 2);
 		ft_free_tab(s_cmd);
 		exit(0);
 	}

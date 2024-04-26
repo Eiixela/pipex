@@ -6,7 +6,7 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 15:31:22 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/20 18:52:03 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/26 17:40:00 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
-
 
 static size_t	ft_count_words(const char *str, char c)
 {

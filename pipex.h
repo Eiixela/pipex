@@ -6,7 +6,7 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:05:35 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/20 18:51:52 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:09:34 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ void		ft_putstr_fd(char *s, int fd);
 char		*ft_strdup(const char *s);
 size_t		ft_strlcpy(char *dst, const char *src, size_t size);
 size_t		ft_strlen(const char *s);
-
 void		pid_error(pid_t pid);
 void		input_error(int ac);
 void		open_infile_error(void);
+char		*get_spaces_in_quotes_back(char *s);
+char		*check_spaces_in_quotes(char *s);
+char		*remove_quotes(char *s);
+void		free_all_tab(char **s_cmd, char **allpath);
 
 #endif
-

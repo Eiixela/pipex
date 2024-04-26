@@ -6,7 +6,7 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:45:40 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/20 16:26:23 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/26 18:09:49 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,24 @@ int	open_file(char *file, int in_or_out)
 	else if (in_or_out == 1)
 		ret = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	return (ret);
+}
+
+void	free_all_tab(char **s_cmd, char **allpath)
+{
+	size_t	i;
+
+	i = 0;
+	while (s_cmd[i])
+	{
+		free(s_cmd[i]);
+		i++;
+	}
+	free(s_cmd);
+	i = 0;
+	while (allpath[i])
+	{
+		free(allpath[i]);
+		i++;
+	}
+	free(allpath);
 }
