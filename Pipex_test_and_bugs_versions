@@ -31,48 +31,48 @@ sg = seg fault
 
 version 1 :
 //avec env
-1 : ok
-2 : ok
-3 : ok
-4 : ok
-5 : ok
-6 : ok
-7 : ok
-8 : ok
-9 : ok
-10 : ok
-11 : ko
-12 : ko
-13 : ok
-14 : ok
+1 : ok ok 
+2 : ok ok
+3 : ok ok
+4 : ok ok 
+5 : ok ok
+6 : ok ok
+7 : ok ok
+8 : ok ok
+9 : ok ok
+10 : ok ok
+11 : ko ok
+12 : ko ok
+13 : ok ok
+14 : ok ok
 //sans env sans path
-1 : ok
-2 : ok
-3 : ok
-4 : ok
-5 : ok
-6 : ok
-7 : ok
-8 : ok
-9 : ok
-10 : ok
-11 : ok
-12 : ok
+1 : ok ok
+2 : ok ok
+3 : ok ok
+4 : ok ok
+5 : ok ok
+6 : ok ok
+7 : ok ok
+8 : ok ok
+9 : ok ok
+10 : ok ok
+11 : ok ok
+12 : ok ok
 //sans env avec path
-1 : ok
-2 : ok
-3 : ok
-4 : ok
-5 : ok
-6 : ok
-7 : ok
-8 : ok
-9 : ok
-10 : ok
-11 : ko
-12 : ko
-13 : ok 
-14 : ok
+1 : ok ok
+2 : ok ok
+3 : ok ok
+4 : ok ok
+5 : ok ok
+6 : ok ok
+7 : ok ok
+8 : ok ok
+9 : ok ok
+10 : ok ok
+11 : ko ok
+12 : ko ok
+13 : ok ok
+14 : ok ok
 
 leak env -i /bin/valgrind --log-file=log --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./pipex Makefile /bin/cat /bin/"grep i" out
 env -i /bin/valgrind --log-file=log --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes ./pipex Makefile /bin/"grep i" /bin/cat out

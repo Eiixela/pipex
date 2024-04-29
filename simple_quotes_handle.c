@@ -6,19 +6,17 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:50:56 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/26 18:08:09 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:09:53 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*check_spaces_in_quotes(char *s)
+char	*check_spaces_in_quotes(char *s, int i)
 {
-	int		i;
 	char	*final;
 
-	i = -1;
-	final = malloc((ft_strlen(s) + 1) * sizeof(char));
+	final = malloc((ft_strlen(s) + 2) * sizeof(char));
 	if (!final)
 		return (NULL);
 	while (s[++i] != '\0')
@@ -38,15 +36,14 @@ char	*check_spaces_in_quotes(char *s)
 		else
 			final[i] = s[i];
 	}
+	final[i] = '\0';
 	return (final);
 }
 
-char	*get_spaces_in_quotes_back(char *s)
+char	*get_spaces_in_quotes_back(char *s, int i)
 {
-	int		i;
 	char	*final;
 
-	i = -1;
 	final = malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (!final)
 		return (NULL);
@@ -67,6 +64,7 @@ char	*get_spaces_in_quotes_back(char *s)
 		else
 			final[i] = s[i];
 	}
+	final[i] = '\0';
 	return (final);
 }
 

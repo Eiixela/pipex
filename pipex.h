@@ -6,7 +6,7 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:05:35 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/26 18:09:34 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:17:52 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		exit_handler(int n_exit);
 int			open_file(char *file, int in_or_out);
 void		ft_free_tab(char **tab);
 char		*get_env(char *name, char **env);
-char		*get_path(char *cmd, char **env);
+char		*get_path(char *cmd, char **env, int i);
 int			path_in_command(char *cmd);
 
 //split.c
@@ -51,9 +51,13 @@ size_t		ft_strlen(const char *s);
 void		pid_error(pid_t pid);
 void		input_error(int ac);
 void		open_infile_error(void);
-char		*get_spaces_in_quotes_back(char *s);
-char		*check_spaces_in_quotes(char *s);
+char		*get_spaces_in_quotes_back(char *s, int i);
+char		*check_spaces_in_quotes(char *s, int i);
 char		*remove_quotes(char *s);
 void		free_all_tab(char **s_cmd, char **allpath);
+void		exit_handler_and_free_double(char **s, int *pipe_fd, int n_exit);
+void		exit_handler_and_free_arrays(char *s, int *pipe_fd);
+char		**handle_space_in_grep(char **s_cmd, int *pipe_fd);
+char		*check_command_in_path(char *cmd);
 
 #endif

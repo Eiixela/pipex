@@ -52,26 +52,18 @@ void	free_all(char **s_cmd, char **allpath)
 	ft_free_tab(allpath);
 }
 
-char	*get_path(char *cmd, char **env)
+char	*get_path(char *cmd, char **env, int i)
 {
 	char	*exec;
 	char	**s_cmd;
 	char	*path_part;
 	char	**allpath;
-	int		i;
 
-	i = -1;
 	if (cmd[0] == '/')
-	{
-		if (access(cmd, F_OK | X_OK) == 0)
-			return (ft_strdup(cmd));
-		return (NULL);
-	}
+		return (check_command_in_path(cmd));
 	allpath = ft_split(get_env("PATH", env), ':');
-	if (!allpath)
-		return (NULL);
 	s_cmd = ft_split(cmd, ' ');
-	if (!s_cmd)
+	if (!s_cmd || !allpath)
 		return (NULL);
 	while (allpath[++i])
 	{

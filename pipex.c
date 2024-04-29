@@ -6,7 +6,7 @@
 /*   By: aljulien <aljulien@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 14:15:26 by aljulien          #+#    #+#             */
-/*   Updated: 2024/04/26 18:08:50 by aljulien         ###   ########.fr       */
+/*   Updated: 2024/04/29 17:13:08 by aljulien         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,22 @@ void	exec(char *cmd, char **env, int *pipe_fd)
 	char	**s_cmd;
 	char	*path;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = -1;
-	cmd = check_spaces_in_quotes(cmd);
+	cmd = check_spaces_in_quotes(cmd, -1);
+	if (!cmd)
+		return (exit_handler_and_free_arrays(cmd, pipe_fd));
 	s_cmd = ft_split(cmd, 32);
-	while (s_cmd[++j])
-	{
-		s_cmd[j] = get_spaces_in_quotes_back(s_cmd[j]);
-		s_cmd[j] = remove_quotes(s_cmd[j]);
-	}
-	path = get_path(s_cmd[0], env);
+	if (!s_cmd)
+		return (exit_handler_and_free_double(s_cmd, pipe_fd, 1));
+	s_cmd = handle_space_in_grep(s_cmd, pipe_fd);
+	path = get_path(s_cmd[0], env, -1);
 	if (path != NULL)
 		i = execve(path, s_cmd, env);
 	if (i == -1 || path == NULL)
 	{
-		ft_putstr_fd("pipex: command not found ", 2);
-		close(pipe_fd[1]);
-		close(pipe_fd[0]);
-		ft_free_tab(s_cmd);
-		exit(0);
+		free(cmd);
+		return (exit_handler_and_free_double(s_cmd, pipe_fd, 2));
 	}
 }
 
